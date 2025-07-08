@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="max-w-3xl mx-auto mt-8">
+    <h1 class="text-2xl font-bold text-center mb-4">Document: {{ filename }}</h1>
+    
+    <div class="bg-gray-100 p-4 rounded shadow mb-6">
+      <h2 class="text-xl font-semibold">Document Summary</h2>
+      <p class="mt-2 text-gray-700">{{ summary }}</p>
+    </div>
+
+    <form id="ask-form" class="mt-4">
+        <input type="text" id="question" name="question" placeholder="Ask something..." class="w-full p-2 border rounded" required />
+        <button type="submit" id="ask-btn" class="mt-2 bg-medicalGreen text-white px-4 py-2 rounded hover:bg-medicalGreenDark">
+            Ask
+        </button>
+    </form>
+
+    <div id="loading" class="mt-2 text-gray-600 hidden">Thinking...</div>
+
+    <div id="answer-box" class="mt-6 hidden p-4 bg-white rounded shadow">
+        <h3 class="font-semibold">Answer:</h3>
+        <p id="answer-text"></p>
+    </div>
+
+    <script>
+        document.getElementById("ask-form").addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const questionInput = document.getElementById("question");
+        const askButton = document.getElementById("ask-btn");
+        const loading = document.getElementById("loading");
+        const answerBox = document.getElementById("answer-box");
+        const answerText = document.getElementById("answer-text");
+
+        // Block interface
+        askButton.disabled = true;
+        loading.classList.remove("hidden");
+        answerBox.classList.add("hidden");
+
+        const response = await fetch(window.location.pathname + "/ask", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ question: questionInput.value })
+        });
+
+        const data = await response.json();
+
+        // Show answer
+        answerText.textContent = data.answer;
+        answerBox.classList.remove("hidden");
+
+        // Unblock interface
+        loading.classList.add("hidden");
+        askButton.disabled = false;
+        questionInput.value = "";
+        });
+    </script>
+
+{% endblock %}

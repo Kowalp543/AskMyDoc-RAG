@@ -10,3 +10,5 @@ uploads/
 node_modules/
 
 app.db
+
+/chroma_db
