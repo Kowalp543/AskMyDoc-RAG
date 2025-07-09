@@ -49,24 +49,29 @@ AskMyDoc-RAG is an intelligent document understanding web application designed t
 
 2. Create and activate a virtual environment (optional, for local development):
 
+    ```bash
     python -m venv venv
     source venv/bin/activate  # Linux/macOS
     venv\Scripts\activate     # Windows
 
 3. Install dependencies:
 
+    ```bash
     pip install -r requirements.txt
 
 4. Run database migrations:
 
+    ```bash
     alembic upgrade head
 
 5. Run the application locally:
 
+    ```bash
     uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
     Or run with Docker Compose:
 
+    ```bash
     docker-compose up --build
 
 6. Open your browser and navigate to:
