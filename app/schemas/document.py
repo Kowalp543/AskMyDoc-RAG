@@ -12,6 +12,3 @@ class DocumentOut(DocumentCreate):
 
     class Config:
         orm_mode = True
-
-
-

@@ -19,6 +19,7 @@ router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
 UPLOAD_FOLDER = os.path.join(os.getcwd(), "uploads")
 
+
 @router.get("/chat/{filename:path}", response_class=HTMLResponse)
 async def chat_with_document(request: Request, filename: str):
     file_path = os.path.join(UPLOAD_FOLDER, filename)
@@ -46,7 +47,11 @@ async def chat_with_document(request: Request, filename: str):
             result = qa_chain.invoke(summary_prompt)
 
             # 5. Obsłuż wynik
-            summary = result["result"] if isinstance(result, dict) and "result" in result else str(result)
+            summary = (
+                result["result"]
+                if isinstance(result, dict) and "result" in result
+                else str(result)
+            )
 
             # 6. Zapisz do bazy (jeśli dokument istnieje, aktualizuj; jeśli nie — dodaj)
             if document:
@@ -60,11 +65,9 @@ async def chat_with_document(request: Request, filename: str):
     finally:
         db.close()
 
-    return templates.TemplateResponse("chat.html", {
-        "request": request,
-        "filename": filename,
-        "summary": summary
-    })
+    return templates.TemplateResponse(
+        "chat.html", {"request": request, "filename": filename, "summary": summary}
+    )
 
 
 @router.post("/chat/{filename:path}/ask")
@@ -83,4 +86,4 @@ async def ask_question(filename: str, body: dict = Body(...)):
     except Exception as e:
         return JSONResponse({"error": str(e)}, status_code=500)
 
-    return JSONResponse({"answer": answer['result']})
+    return JSONResponse({"answer": answer["result"]})

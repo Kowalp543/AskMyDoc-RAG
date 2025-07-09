@@ -9,5 +9,3 @@ class Document(Base):
     filename = Column(String, index=True)
     content = Column(String)
     path = Column(String)
-
-

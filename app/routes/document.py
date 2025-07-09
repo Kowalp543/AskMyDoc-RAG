@@ -10,6 +10,7 @@ from fastapi.responses import HTMLResponse
 router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
 
+
 def get_db():
     db = SessionLocal()
     try:
@@ -29,9 +30,12 @@ def documents_list(request: Request):
     db: Session = SessionLocal()
     documents_list = list_documents(db)
     documents_list_count = len(documents_list)
-    
-    return templates.TemplateResponse("documents.html", {
-        "request": request,
-        "documents_list": documents_list,
-        "documents_list_count": documents_list_count
-    })
+
+    return templates.TemplateResponse(
+        "documents.html",
+        {
+            "request": request,
+            "documents_list": documents_list,
+            "documents_list_count": documents_list_count,
+        },
+    )

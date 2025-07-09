@@ -17,9 +17,11 @@ templates = Jinja2Templates(directory="app/templates")
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
+
 @router.get("/upload", response_class=HTMLResponse)
 def upload_page(request: Request):
     return templates.TemplateResponse("upload.html", {"request": request})
+
 
 @router.post("/upload")
 async def handle_upload(request: Request, file: UploadFile = File(...)):
@@ -31,18 +33,9 @@ async def handle_upload(request: Request, file: UploadFile = File(...)):
 
         try:
             relative_path = f"{UPLOAD_FOLDER}/{file.filename}"
-            doc = DocumentCreate(
-                filename=file.filename,
-                path=relative_path,
-                content=""
-            )
+            doc = DocumentCreate(filename=file.filename, path=relative_path, content="")
             create_document(db, doc)
         finally:
             db.close()
-    
+
     return RedirectResponse(f"/chat/{file.filename}", status_code=303)
-
-
-
-
-

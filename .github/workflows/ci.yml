@@ -1,4 +1,4 @@
-name: Run Tests
+name: CI
 
 on:
   push:
@@ -29,7 +29,8 @@ jobs:
           PYTHONPATH=. pytest --cov=app tests/
 
       - name: Check code formatting (Black)
-        run: black --check .
+        run: black --check . --exclude "alembic"
+        continue-on-error: false
 
       - name: Run Ruff (linter)
         run: ruff .

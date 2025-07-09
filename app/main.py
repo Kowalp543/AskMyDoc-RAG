@@ -18,5 +18,3 @@ app.include_router(upload.router)
 app.include_router(chat.router)
 
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
-
-
