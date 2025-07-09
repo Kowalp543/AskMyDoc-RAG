@@ -51,8 +51,8 @@ AskMyDoc-RAG is an intelligent document understanding web application designed t
 
     ```bash
     python -m venv venv
-    source venv/bin/activate  # Linux/macOS
-    venv\Scripts\activate     # Windows
+    source venv/bin/activate    # Linux/macOS
+    venv\Scripts\activate       # Windows
 
 3. Install dependencies:
 
@@ -66,13 +66,17 @@ AskMyDoc-RAG is an intelligent document understanding web application designed t
 
 5. Run the application locally:
 
+    To run the app locally with auto-reload:
+
     ```bash
     uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    ```
 
     Or run with Docker Compose:
 
     ```bash
     docker-compose up --build
+    ```
 
 6. Open your browser and navigate to:
 
