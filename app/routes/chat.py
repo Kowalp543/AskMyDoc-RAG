@@ -10,7 +10,6 @@ from app.rag.vectorstore import store_embeddings
 from app.rag.qa import create_qa_chain
 
 from app.db.session import SessionLocal
-from app.services.document import create_document
 from sqlalchemy.orm import Session
 from app.models.document import Document
 
