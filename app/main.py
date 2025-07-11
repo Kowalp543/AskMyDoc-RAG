@@ -3,8 +3,10 @@ from fastapi.staticfiles import StaticFiles
 
 from app.db.session import Base, engine
 from app.routes import document, home, upload, chat
-from app.settings import settings
+from app.settings import get_settings
 
+
+settings = get_settings()
 
 app = FastAPI(title=settings.app_name, debug=settings.debug)
 

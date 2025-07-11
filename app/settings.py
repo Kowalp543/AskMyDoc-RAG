@@ -15,5 +15,10 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
 
+_settings: Settings | None = None
 
-settings = Settings()
+def get_settings() -> Settings:
+    global _settings
+    if _settings is None:
+        _settings = Settings()
+    return _settings
