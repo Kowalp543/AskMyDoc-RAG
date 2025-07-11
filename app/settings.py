@@ -1,4 +1,5 @@
 from pydantic_settings import BaseSettings
+from pydantic import Field
 
 
 class Settings(BaseSettings):
@@ -7,9 +8,9 @@ class Settings(BaseSettings):
     host: str = "0.0.0.0"
     port: int = 8000
 
-    database_url: str
+    database_url: str = Field(..., alias="DATABASE_URL")
 
-    openai_api_key: str | None = None
+    openai_api_key: str | None = Field(None, alias="OPENAI_API_KEY")
 
     class Config:
         env_file = ".env"
