@@ -1,10 +1,11 @@
 from fastapi import APIRouter, Depends, Request
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
+from fastapi.responses import HTMLResponse
+
 from app.schemas.document import DocumentCreate, DocumentOut
 from app.services.document import create_document, list_documents
 from app.db.session import SessionLocal
-from fastapi.responses import HTMLResponse
 
 
 router = APIRouter()
@@ -25,9 +26,8 @@ def create(doc: DocumentCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/documents/", response_class=HTMLResponse)
-def documents_list(request: Request):
+def documents_list(request: Request, db: Session = Depends(get_db)):
 
-    db: Session = SessionLocal()
     documents_list = list_documents(db)
     documents_list_count = len(documents_list)
 

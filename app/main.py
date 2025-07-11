@@ -1,11 +1,12 @@
 from fastapi import FastAPI
-from app.db.session import Base, engine
-from app.routes import document, home, upload, chat
-
 from fastapi.staticfiles import StaticFiles
 
+from app.db.session import Base, engine
+from app.routes import document, home, upload, chat
+from app.settings import settings
 
-app = FastAPI()
+
+app = FastAPI(title=settings.app_name, debug=settings.debug)
 
 Base.metadata.create_all(bind=engine)
 
