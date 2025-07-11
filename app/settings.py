@@ -2,6 +2,7 @@ from pydantic_settings import BaseSettings
 from pydantic import Field
 import os
 
+
 class Settings(BaseSettings):
     app_name: str = "AskMyDoc-RAG"
     debug: bool = True
@@ -15,7 +16,9 @@ class Settings(BaseSettings):
         env_file = os.getenv("ENV_FILE", ".env")
         env_file_encoding = "utf-8"
 
+
 _settings: Settings | None = None
+
 
 def get_settings() -> Settings:
     global _settings

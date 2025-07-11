@@ -17,6 +17,7 @@ router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
 UPLOAD_FOLDER = os.path.join(os.getcwd(), "uploads")
 
+
 def get_db():
     db = SessionLocal()
     try:
@@ -26,7 +27,9 @@ def get_db():
 
 
 @router.get("/chat/{filename:path}", response_class=HTMLResponse)
-async def chat_with_document(request: Request, filename: str, db: Session = Depends(get_db)):
+async def chat_with_document(
+    request: Request, filename: str, db: Session = Depends(get_db)
+):
     file_path = os.path.join(UPLOAD_FOLDER, filename)
 
     try:
