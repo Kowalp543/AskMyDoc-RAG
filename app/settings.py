@@ -1,6 +1,6 @@
 from pydantic_settings import BaseSettings
 from pydantic import Field
-
+import os
 
 class Settings(BaseSettings):
     app_name: str = "AskMyDoc-RAG"
@@ -9,11 +9,11 @@ class Settings(BaseSettings):
     port: int = 8000
 
     database_url: str = Field(..., alias="DATABASE_URL")
-
     openai_api_key: str | None = Field(None, alias="OPENAI_API_KEY")
 
     class Config:
-        env_file = ".env"
+        env_file = os.getenv("ENV_FILE", ".env")
+        env_file_encoding = "utf-8"
 
 _settings: Settings | None = None
 
